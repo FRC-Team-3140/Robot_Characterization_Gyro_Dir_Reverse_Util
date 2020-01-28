@@ -111,7 +111,7 @@ public class GyroReverser extends JPanel implements ActionListener {
 				}
 				
 				log.append("Saving: " + fileName.concat("_GyroReversed.json") + "." + newline);
-				saveFile(fcSaver.getCurrentDirectory());
+				saveFile(fcSaver.getSelectedFile());
 				log.append("File Saved.");
 			} else {
 				log.append("Save command cancelled by user." + newline);
@@ -175,22 +175,25 @@ public class GyroReverser extends JPanel implements ActionListener {
 	@SuppressWarnings("unchecked")
 	public void modifyFile() {
 		if (jsonObject != null) {
-			String name = (String) jsonObject.get("name");
-			long age = (Long) jsonObject.get("age");
 
 			// loop array
-			JSONArray msg = (JSONArray) jsonObject.get("messages");
-			Iterator<String> iterator = msg.iterator();
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
+			JSONArray slowForwards = (JSONArray) jsonObject.get("slow-forward");
+			JSONArray slowBackwards = (JSONArray) jsonObject.get("slow-backwards");
+			JSONArray fastForwards = (JSONArray) jsonObject.get("fast-forwards");
+			JSONArray fastBackwards = (JSONArray) jsonObject.get("fast-backwards");
+			JSONArray trackWidth = (JSONArray) jsonObject.get("track-width");
 
-			JSONObject objNew = new JSONObject();
-			objNew.put("name", name);
-			objNew.put("age", age);
-			objNew.put("messages", msg);
+			//Iterator<String> iterator = msg.iterator();
+			//while (iterator.hasNext()) {
+				//System.out.println(iterator.next());
+			//}
+
+			//JSONObject objNew = new JSONObject();
+			//objNew.put("name", name);
+			//objNew.put("age", age);
+			//objNew.put("messages", msg);
 			
-			jsonObject = objNew;
+			//jsonObject = objNew;
 		} else
 			log.append("Error: Went to modify file, but file is null.");
 
@@ -203,7 +206,7 @@ public class GyroReverser extends JPanel implements ActionListener {
 			fileName = fileName.substring(0, pos);
 		}
 		
-		String newName = fileName.concat("_GyroReversed.json");
+		String newName = directory + "\\" + fileName.concat("_GyroReversed.json");
 		
 		try (FileWriter file = new FileWriter(newName)) {
 			file.write(jsonObject.toJSONString());
