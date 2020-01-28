@@ -178,22 +178,69 @@ public class GyroReverser extends JPanel implements ActionListener {
 
 			// loop array
 			JSONArray slowForwards = (JSONArray) jsonObject.get("slow-forward");
-			JSONArray slowBackwards = (JSONArray) jsonObject.get("slow-backwards");
-			JSONArray fastForwards = (JSONArray) jsonObject.get("fast-forwards");
-			JSONArray fastBackwards = (JSONArray) jsonObject.get("fast-backwards");
+			JSONArray slowBackwards = (JSONArray) jsonObject.get("slow-backward");
+			JSONArray fastForwards = (JSONArray) jsonObject.get("fast-forward");
+			JSONArray fastBackwards = (JSONArray) jsonObject.get("fast-backward");
 			JSONArray trackWidth = (JSONArray) jsonObject.get("track-width");
 
-			//Iterator<String> iterator = msg.iterator();
-			//while (iterator.hasNext()) {
-				//System.out.println(iterator.next());
-			//}
-
-			//JSONObject objNew = new JSONObject();
-			//objNew.put("name", name);
-			//objNew.put("age", age);
-			//objNew.put("messages", msg);
+			Iterator<JSONArray> slowForwardsIterator = slowForwards.iterator();
+			JSONArray newSlowForwards = new JSONArray();
+			while (slowForwardsIterator.hasNext()) {
+				JSONArray data = new JSONArray();
+				data = slowForwardsIterator.next();
 			
-			//jsonObject = objNew;
+				data.set(9, Double.parseDouble(data.get(9).toString()) * -1.0);
+				newSlowForwards.add(data);
+			}
+			
+			Iterator<JSONArray> slowBackwardsIterator = slowBackwards.iterator();
+			JSONArray newSlowBackwards = new JSONArray();
+			while (slowBackwardsIterator.hasNext()) {
+				JSONArray data = new JSONArray();
+				data = slowBackwardsIterator.next();
+			
+				data.set(9, Double.parseDouble(data.get(9).toString()) * -1.0);
+				newSlowBackwards.add(data);
+			}
+			
+			Iterator<JSONArray> fastForwardsIterator = fastForwards.iterator();
+			JSONArray newFastForwards = new JSONArray();
+			while (fastForwardsIterator.hasNext()) {
+				JSONArray data = new JSONArray();
+				data = fastForwardsIterator.next();
+			
+				data.set(9, Double.parseDouble(data.get(9).toString()) * -1.0);
+				newFastForwards.add(data);
+			}
+			
+			Iterator<JSONArray> fastBackwardsIterator = fastBackwards.iterator();
+			JSONArray newFastBackwards = new JSONArray();
+			while (fastBackwardsIterator.hasNext()) {
+				JSONArray data = new JSONArray();
+				data = fastBackwardsIterator.next();
+			
+				data.set(9, Double.parseDouble(data.get(9).toString()) * -1.0);
+				newFastBackwards.add(data);
+			}
+			
+			Iterator<JSONArray> trackWidthIterator = trackWidth.iterator();
+			JSONArray newTrackWidth = new JSONArray();
+			while (trackWidthIterator.hasNext()) {
+				JSONArray data = new JSONArray();
+				data = trackWidthIterator.next();
+			
+				data.set(9, Double.parseDouble(data.get(9).toString()) * -1.0);
+				newTrackWidth.add(data);
+			}
+
+			JSONObject objNew = new JSONObject();
+			objNew.put("slow-forward", newSlowForwards);
+			objNew.put("slow-backward", newSlowBackwards);
+			objNew.put("fast-forward", newFastForwards);
+			objNew.put("fast-backward", newFastBackwards);
+			objNew.put("track-width", newTrackWidth);
+			
+			jsonObject = objNew;
 		} else
 			log.append("Error: Went to modify file, but file is null.");
 
